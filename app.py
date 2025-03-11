@@ -4,7 +4,6 @@ import numpy as np
 import imageio.v3 as iio
 from PIL import Image
 from io import BytesIO
-import zipfile
 from streamlit_drawable_canvas import st_canvas
 
 # Initialize session state
@@ -56,19 +55,6 @@ def apply_blur(heatmap):
     current_max = heatmap.max()
     blurred = cv2.GaussianBlur(heatmap, (51, 51), 25)
     return blurred * (current_max / blurred.max()) if current_max > 0 else blurred
-
-def create_zip(heatmaps):
-    zip_buffer = BytesIO()
-    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
-        for idx, heatmap in enumerate(heatmaps):
-            if heatmap.max() > 0:
-                heatmap_norm = (heatmap / heatmap.max() * 255).astype(np.uint8)
-                img = Image.fromarray(heatmap_norm)
-                img_bytes = BytesIO()
-                img.save(img_bytes, format="PNG")
-                zip_file.writestr(f"heatmap_{idx + 1}.png", img_bytes.getvalue())
-    zip_buffer.seek(0)
-    return zip_buffer
 
 def main():
     st.title("Medical Image Heatmap Painter")
@@ -138,21 +124,18 @@ def main():
         with col1:
             if st.button("← Previous") and current_idx > 0:
                 st.session_state.current_idx -= 1
-                st.experimental_rerun()  # Use experimental_rerun to avoid resetting state
+                st.rerun()
         with col2:
             if st.button("Next →") and current_idx < len(st.session_state.images) - 1:
                 st.session_state.current_idx += 1
-                st.experimental_rerun()  # Use experimental_rerun to avoid resetting state
+                st.rerun()
 
-        # Download all heatmaps as a zip file
-        if st.button("Download All Heatmaps"):
-            zip_buffer = create_zip(st.session_state.heatmaps)
-            st.download_button(
-                label="Download ZIP",
-                data=zip_buffer,
-                file_name="heatmaps.zip",
-                mime="application/zip"
-            )
+        if heatmap.max() > 0:
+            heatmap_norm = (heatmap / heatmap.max() * 255).astype(np.uint8)
+            img = Image.fromarray(heatmap_norm)
+            buf = BytesIO()
+            img.save(buf, format="PNG")
+            st.download_button("Download Heatmap", data=buf.getvalue(), file_name="heatmap.png", mime="image/png")
 
 if __name__ == "__main__":
     main()
