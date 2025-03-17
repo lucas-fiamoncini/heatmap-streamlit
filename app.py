@@ -93,8 +93,6 @@ def main():
         heatmap_colored = cv2.applyColorMap((heatmap_inverted * 255).astype(np.uint8), cv2.COLORMAP_JET)
         blended = cv2.addWeighted(display_img, 0.5, heatmap_colored, 0.5, 0)
 
-        st.error("Blended image data type:", blended.dtype)
-
         st.image(blended, use_column_width=True, caption="Draw on the image to create a heatmap")
 
         canvas = st_canvas(
