@@ -93,7 +93,15 @@ def main():
         heatmap_colored = cv2.applyColorMap((heatmap_inverted * 255).astype(np.uint8), cv2.COLORMAP_JET)
         blended = cv2.addWeighted(display_img, 0.5, heatmap_colored, 0.5, 0)
 
-        st.image(blended, use_column_width=True, caption="Draw on the image to create a heatmap")
+        st.write("Blended image shape:", blended.shape)
+        st.write("Blended image data type:", blended.dtype)
+
+        # Display the background image separately using st.image
+        st.image(blended, caption="Background Image", use_column_width=True)
+
+        # Convert to PIL Image and display
+        background_image = Image.fromarray(blended)
+        st.image(background_image, caption="PIL Background Image", use_column_width=True)
 
         canvas = st_canvas(
             stroke_width=st.session_state.brush_size,
