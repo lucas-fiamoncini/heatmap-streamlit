@@ -33,7 +33,7 @@ def process_files(uploaded_files):
             img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
         else:
             # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = Image.open(file).convert("RGB")
+            img = Image.open(img).convert("RGB")
             img = np.array(img)
         
         h, w = img.shape[:2]
