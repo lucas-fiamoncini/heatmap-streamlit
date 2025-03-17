@@ -32,10 +32,10 @@ def process_files(uploaded_files):
         if img.ndim == 2:
             img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
         else:
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = Image.open(img).convert("RGB")
-            img = np.array(img)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
+       
+        st.write("Uploaded files:", img)
         h, w = img.shape[:2]
         st.session_state.original_shapes.append((h, w))
         
