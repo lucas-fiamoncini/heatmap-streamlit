@@ -98,7 +98,7 @@ def main():
         canvas = st_canvas(
             stroke_width=st.session_state.brush_size,
             stroke_color="#e4eded",
-            background_image=Image.fromarray(blended),
+            background_image=Image.fromarray(blended.astype(np.uint8)),
             height=blended.shape[0],
             width=blended.shape[1],
             drawing_mode="freedraw",
