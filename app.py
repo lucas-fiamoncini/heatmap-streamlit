@@ -57,7 +57,7 @@ def apply_blur(heatmap):
     return blurred * (current_max / blurred.max()) if current_max > 0 else blurred
 
 def main():
-    st.title("Medical Image Heatmap Painter")
+    st.title("Heatmap Painter")
     init_state()
     
     uploaded_files = st.file_uploader("Upload images", 
@@ -77,7 +77,6 @@ def main():
         with st.sidebar:
             st.header("Settings")
             st.session_state.brush_size = st.slider("Brush Size", 1, 100, st.session_state.brush_size)
-            st.session_state.brush_intensity = st.select_slider("Intensity", [0.5, 1.0], st.session_state.brush_intensity)
             
             if st.button("Apply Gaussian Blur"):
                 st.session_state.heatmaps[current_idx] = apply_blur(heatmap)
