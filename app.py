@@ -104,7 +104,9 @@ def main():
         )
 
         if canvas.image_data is not None:
-            mask = cv2.cvtColor(np.array(canvas.image_data), cv2.COLOR_RGBA2GRAY)
+            # mask = cv2.cvtColor(np.array(canvas.image_data), cv2.COLOR_RGBA2GRAY)
+            mask = cv2.cvtColor(np.array(canvas.image_data).astype(np.uint8), cv2.COLOR_RGBA2GRAY)
+
             ys, xs = np.where(mask > 10)
             
             if len(xs) > 0:
