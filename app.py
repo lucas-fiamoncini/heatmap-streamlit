@@ -57,7 +57,7 @@ def apply_blur(heatmap):
     return blurred * (current_max / blurred.max()) if current_max > 0 else blurred
 
 def main():
-    st.title("Heatmap Painter")
+    st.title("Heatmap Drawing Tool")
     init_state()
     
     uploaded_files = st.file_uploader("Upload images", 
