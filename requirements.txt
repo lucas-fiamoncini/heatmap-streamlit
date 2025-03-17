@@ -1,4 +1,4 @@
-streamlit==1.27.0
+streamlit>=1.27.0
 streamlit-drawable-canvas>=0.9.3
 # numpy==1.26.4
 numpy>=1.26.4
@@ -7,4 +7,4 @@ opencv-python-headless>=4.8.0
 # opencv-python>=4.8.0
 imageio>=2.33.0
 # imageio==2.35.1
-Pillow==9.5.0
+Pillow>=9.5.0
