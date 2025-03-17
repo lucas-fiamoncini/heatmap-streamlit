@@ -93,7 +93,7 @@ def main():
         heatmap_colored = cv2.applyColorMap((heatmap_inverted * 255).astype(np.uint8), cv2.COLORMAP_JET)
         blended = cv2.addWeighted(display_img, 0.5, heatmap_colored, 0.5, 0)
 
-        st.error(blended)
+        st.error(Image.fromarray(blended))
 
         canvas = st_canvas(
             stroke_width=st.session_state.brush_size,
