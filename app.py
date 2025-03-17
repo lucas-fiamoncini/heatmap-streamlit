@@ -34,8 +34,6 @@ def process_files(uploaded_files):
         else:
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
-       
-        st.write("Uploaded files:", img)
         h, w = img.shape[:2]
         st.session_state.original_shapes.append((h, w))
         
@@ -94,6 +92,8 @@ def main():
         heatmap_inverted = 1.0 - heatmap_display
         heatmap_colored = cv2.applyColorMap((heatmap_inverted * 255).astype(np.uint8), cv2.COLORMAP_JET)
         blended = cv2.addWeighted(display_img, 0.5, heatmap_colored, 0.5, 0)
+
+        st.error(blended)
 
         canvas = st_canvas(
             stroke_width=st.session_state.brush_size,
